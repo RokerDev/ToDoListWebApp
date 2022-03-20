@@ -10,6 +10,7 @@ padding-bottom: 0;
 
 .navbar-brand{
     margin: 0 2%;
+    font-size: 3rem;
 }
 
  /* Nav's buttons */
@@ -37,5 +38,6 @@ padding-bottom: 0;
     width: 95%;
     height: 90vh;
     margin: 1% 2%;
-    padding: 5% 5%;
+    padding: 3% 5%;
 }
+
