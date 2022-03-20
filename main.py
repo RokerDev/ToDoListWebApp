@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import relationship
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -10,6 +11,24 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
+class Tasks(db.Model):
+    __tablename__ = "tasks"
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(200))
+    data = db.Column(db.DateTime)
+    category = db.Column(db.String(30))
+    author = relationship("User", back_populates="task")
+
+
+class User(db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100))
+    password = db.Column(db.String(100))
+    name = db.Column(db.String(100))
+    task = relationship("Tasks", back_populates="author")
+
+# db.create_all()
 
 
 @app.route("/")
