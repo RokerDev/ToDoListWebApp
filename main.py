@@ -2,6 +2,9 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, PasswordField
+from wtforms.validators import DataRequired, URL
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -29,6 +32,7 @@ class User(db.Model):
     task = relationship("Tasks", back_populates="author")
 
 # db.create_all()
+
 
 
 @app.route("/")
