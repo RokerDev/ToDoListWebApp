@@ -3,7 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, SelectField, DateTimeField
 from wtforms.validators import DataRequired, URL
 
 app = Flask(__name__)
@@ -45,6 +45,13 @@ class LogInForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Log Me In")
+
+
+class AddTaskForm(FlaskForm):
+    description = SubmitField("Task", validators=[DataRequired()])
+    data = DateTimeField("Data")
+    category = SelectField("Category")
+
 
 
 @app.route("/")
