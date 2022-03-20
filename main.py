@@ -31,8 +31,14 @@ class User(db.Model):
     name = db.Column(db.String(100))
     task = relationship("Tasks", back_populates="author")
 
+
 # db.create_all()
 
+class RegisterForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Sign me up")
 
 
 @app.route("/")
