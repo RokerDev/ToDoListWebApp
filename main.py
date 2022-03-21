@@ -67,7 +67,8 @@ def login():
 
 @app.route("/registration")
 def register():
-    pass
+    form = RegisterForm()
+    return render_template("register.html", form=form)
 
 
 if __name__ == "__main__":
