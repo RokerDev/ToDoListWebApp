@@ -23,7 +23,8 @@
 {% endblock %}
 
 {% block navbar %}
-      <nav class="navbar navbar-expand-sm navbar-light bg-light">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
 
         <a class="navbar-brand" href="#">Your ToDo List</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item px-3">
-              <a class="nav-link active fs-3" aria-current="page" href="#">Log In</a>
+              <a class="nav-link active fs-3" aria-current="page" href="{{url_for('login')}}">Log In</a>
             </li>
             <li class="nav-item px-3">
               <a class="nav-link fs-3" href="#">Example</a>
@@ -46,6 +47,7 @@
 
       </nav>
 <hr>
+      </div>
 {% endblock %}
 
 {% block scripts %}
