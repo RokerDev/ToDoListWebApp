@@ -3,12 +3,12 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, SelectField, DateTimeField
+from wtforms import StringField, SubmitField, PasswordField, SelectField, DateTimeField, BooleanField
 from wtforms.validators import DataRequired, URL
 
 app = Flask(__name__)
 Bootstrap(app)
-
+app.config['SECRET_KEY'] = '123456QWERTYqwerty123'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////static/database/todos.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -17,6 +17,7 @@ db = SQLAlchemy(app)
 class Tasks(db.Model):
     __tablename__ = "tasks"
     id = db.Column(db.Integer, primary_key=True)
+    check = db.Column(db.Boolean)
     description = db.Column(db.String(200))
     data = db.Column(db.DateTime)
     category = db.Column(db.String(30))
@@ -53,10 +54,15 @@ class AddTaskForm(FlaskForm):
     category = SelectField("Category")
 
 
-
 @app.route("/")
 def home():
     return render_template("index.html")
+
+
+@app.route("/login")
+def login():
+    form = LogInForm()
+    return render_template("login.html", form=form)
 
 
 if __name__ == "__main__":
