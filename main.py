@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
@@ -9,31 +9,32 @@ from wtforms.validators import DataRequired, URL
 app = Flask(__name__)
 Bootstrap(app)
 app.config['SECRET_KEY'] = '123456QWERTYqwerty123'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////static/database/todos.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///static/database/todos.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
-
-class Tasks(db.Model):
-    __tablename__ = "tasks"
-    id = db.Column(db.Integer, primary_key=True)
-    check = db.Column(db.Boolean)
-    description = db.Column(db.String(200))
-    data = db.Column(db.DateTime)
-    category = db.Column(db.String(30))
-    author = relationship("User", back_populates="task")
 
 
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100))
-    password = db.Column(db.String(100))
-    name = db.Column(db.String(100))
-    task = relationship("Tasks", back_populates="author")
+    email = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    task = db.relationship("Tasks", lazy="select", backref=db.backref("author", lazy="joined"))
+
+
+class Tasks(db.Model):
+    __tablename__ = "tasks"
+    id = db.Column(db.Integer, primary_key=True)
+    check = db.Column(db.Boolean, nullable=False)
+    description = db.Column(db.String(200), nullable=False)
+    data = db.Column(db.DateTime, nullable=False)
+    category = db.Column(db.String(30), nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
 
 # db.create_all()
+
 
 class RegisterForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
@@ -65,7 +66,7 @@ def login():
     return render_template("login.html", form=form)
 
 
-@app.route("/registration")
+@app.route("/registration", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
     return render_template("register.html", form=form)
