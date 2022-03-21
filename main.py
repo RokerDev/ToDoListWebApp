@@ -69,6 +69,19 @@ def login():
 @app.route("/registration", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+        password = form.password.data
+
+        user = User(
+            name=name,
+            email=email,
+            password=password
+        )
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for("home"))
     return render_template("register.html", form=form)
 
 
