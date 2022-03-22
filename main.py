@@ -3,6 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_wtf import FlaskForm
+from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from wtforms import StringField, SubmitField, PasswordField, SelectField, DateTimeField, BooleanField
 from wtforms.validators import DataRequired, URL
 
