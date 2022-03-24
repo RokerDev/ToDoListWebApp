@@ -72,6 +72,19 @@ def home():
 @app.route("/login")
 def login():
     form = LogInForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return redirect(url_for("login"))
+        elif not user.password == password:
+            return redirect(url_for("login"))
+        else:
+            login_user(user)
+            return redirect("home")
+
     return render_template("login.html", form=form)
 
 
