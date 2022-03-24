@@ -78,8 +78,10 @@ def login():
 
         user = User.query.filter_by(email=email).first()
         if not user:
+            flash("That account does not exist, please try again.")
             return redirect(url_for("login"))
         elif not user.password == password:
+            flash("Password is incorrect, please try again")
             return redirect(url_for("login"))
         else:
             login_user(user)
