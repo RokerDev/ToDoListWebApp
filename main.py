@@ -98,10 +98,15 @@ def register():
         email = form.email.data
         password = form.password.data
 
+        hash_and_salted_password = generate_password_hash(
+            password,
+            method='pbkdf2:sha256',
+            salt_length=8)
+
         user = User(
             name=name,
             email=email,
-            password=password
+            password=hash_and_salted_password
         )
         db.session.add(user)
         db.session.commit()
