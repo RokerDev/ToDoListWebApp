@@ -98,6 +98,10 @@ def register():
         email = form.email.data
         password = form.password.data
 
+        if User.query.filter_by(email=email).first():
+            flash("You've already signed up with that email, log in instead!")
+            return redirect(url_for("login"))
+
         hash_and_salted_password = generate_password_hash(
             password,
             method='pbkdf2:sha256',
