@@ -69,7 +69,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
     form = LogInForm()
     if form.validate_on_submit():
@@ -80,12 +80,12 @@ def login():
         if not user:
             flash("That account does not exist, please try again.")
             return redirect(url_for("login"))
-        elif not user.password == password:
+        elif not check_password_hash(user.password, password):
             flash("Password is incorrect, please try again")
             return redirect(url_for("login"))
         else:
             login_user(user)
-            return redirect("home")
+            return redirect(url_for("home"))
 
     return render_template("login.html", form=form)
 
