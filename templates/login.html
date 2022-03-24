@@ -6,8 +6,13 @@
 
 
     <div>
-      <h1>----Log In----</h1>
-      {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        <h1>----Log In----</h1>
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        <ul>
+        {% for message in get_flashed_messages() %}
+            <li>{{message}}</li>
+        {% endfor %}
+        </ul>
     </div>
 
 
