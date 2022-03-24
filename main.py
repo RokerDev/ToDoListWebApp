@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import relationship
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from wtforms import StringField, SubmitField, PasswordField, SelectField, DateTimeField, BooleanField
