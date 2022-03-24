@@ -14,6 +14,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///static/database/todos.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 
 class User(db.Model):
     __tablename__ = "users"
