@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -35,6 +37,7 @@ class User(UserMixin, db.Model):
 class Tasks(db.Model):
     __tablename__ = "tasks"
     id = db.Column(db.Integer, primary_key=True)
+    author_task_id = db.Column(db.Integer, nullable=False)
     check = db.Column(db.Boolean, nullable=False)
     description = db.Column(db.String(200), nullable=False)
     data = db.Column(db.DateTime, nullable=False)
@@ -66,7 +69,40 @@ class AddTaskForm(FlaskForm):
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", current_user=current_user)
+
+
+@app.route("/your-list/<options>")
+@login_required
+def user_todo_list_sorted_by_category(options):
+    user_tasks = current_user.task
+    tasks = [task for task in user_tasks if task.category == options]
+
+    return render_template("index.html", tasks=tasks)
+
+
+@app.route("/your-list/<options>")
+@login_required
+def user_todo_list_sorted_by_periods(options):
+    user_tasks = current_user.task
+    tasks = [task for task in user_tasks if task.category == options]
+
+    return render_template("index.html", tasks=tasks)
+
+
+@app.route("/your-list/<options>")
+@login_required
+def user_todo_list_sorted_by_states(options):
+    user_tasks = current_user.task
+    tasks = [task for task in user_tasks if task.category == options]
+
+    return render_template("index.html", tasks=tasks)
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -85,9 +121,9 @@ def login():
             return redirect(url_for("login"))
         else:
             login_user(user)
-            return redirect(url_for("home"))
+            return redirect(url_for("user_todo_list", options="nowe_logowanie"))
 
-    return render_template("login.html", form=form)
+    return render_template("login.html", form=form, current_user=current_user)
 
 
 @app.route("/registration", methods=["GET", "POST"])
