@@ -19,20 +19,18 @@ padding-bottom: 0;
 
  /* Nav's buttons */
 
-.nav-pills .nav-link.active{
-    background-color: #ced4da;
+
+.btn{
+font-size: 1.5rem;
 }
 
-.nav-link{
-    color: #000;
-}
-
-.nav-link:hover {
+.btn:hover {
     color: #ced4da;
 }
 
 .nav-buttons{
-    margin: 1% 5%;
+text-align: center;
+padding: 3% 0;
 }
 
 /* Nav's tabs */
@@ -40,13 +38,17 @@ padding-bottom: 0;
 .nav-tabs{
     width: 95%;
     height: 90vh;
-    padding: 3% 8%;
+    padding: 3% 7%;
 }
 
 /* Table */
 
 .table-space{
-    width: 80%;
+    width: 60%;
+}
+
+.table-padding{
+padding: 2% 0;
 }
 
 /* Login Page */
