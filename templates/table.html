@@ -1,26 +1,51 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th class="table-space" scope="col">Task</th>
-      <th scope="col">Deadline</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td class="table-space">Mark</td>
-      <td>Otto</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td class="table-space">Jacob</td>
-      <td>Thornton</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td class="table-space">Larry</td>
-      <td>the Bird</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2 nav-buttons">
+                <div class="btn-group-vertical">
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_periods', options='Today')}}" role="button">Today</a>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_periods', options='Month')}}" role="button">Month</a>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_periods', options='3 Month')}}" role="button">3 Month</a>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_periods', options='6 Month')}}" role="button">6 Month</a>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_periods', options='Year')}}" role="button">Year</a>
+                    <hr>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_category', options='Home')}}" role="button">Home</a>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_category', options='Shop')}}" role="button">Shop</a>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_category', options='Work')}}" role="button">Work</a>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_category', options='Ideas')}}" role="button">Ideas</a>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_category', options='Places')}}" role="button">Places</a>
+                    <hr>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_states', options='Done')}}" role="button">Done</a>
+                    <a class="btn btn-dark" href="{{url_for('user_todo_list_sorted_by_states', options='Undone')}}" role="button">Undone</a>
+                </div>
+        </div>
+        <div class="col-lg-10 table-padding">
+            <table class="table">
+              <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">State</th>
+                    <th class="table-space" scope="col">Task</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Author Id</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% if tasks %}
+              {% for task in tasks %}
+                <tr>
+                    <th scope="row">{{task.author_task_id}}</th>
+                    <td>{{task.check}}</td>
+                    <td class="table-space">{{task.description}}</td>
+                    <td>{{task.data}}</td>
+                    <td>{{task.category}}</td>
+                    <td>{{task.author_id}}</td>
+                </tr>
+              {% endfor %}
+              {% endif %}
+
+              </tbody>
+            </table>
+        </div>
+    </div>
+</div>
