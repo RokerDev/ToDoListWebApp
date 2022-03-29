@@ -9,6 +9,10 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from wtforms import StringField, SubmitField, PasswordField, SelectField, DateTimeField, BooleanField
 from wtforms.validators import DataRequired, URL
 
+LIST_OF_CATEGORIES = ["Home", "Shop", "Work", "Ideas", "Places"]
+LIST_OF_PERIODS = ["Today", "Month", "3 Month", "6 Month", "Year"]
+LIST_OF_STATES = ["Done", "Undone"]
+
 app = Flask(__name__)
 Bootstrap(app)
 app.config['SECRET_KEY'] = '123456QWERTYqwerty123'
@@ -72,29 +76,66 @@ def home():
     return render_template("index.html", current_user=current_user)
 
 
-@app.route("/your-list/<options>")
+@app.route("/list_by_category/<options>")
 @login_required
 def user_todo_list_sorted_by_category(options):
     user_tasks = current_user.task
-    tasks = [task for task in user_tasks if task.category == options]
+    if options not in LIST_OF_CATEGORIES:
+        return redirect(url_for("logout"))
+    tasks = [task for task in user_tasks if task.category == options and task.check == False]
 
     return render_template("index.html", tasks=tasks)
 
 
-@app.route("/your-list/<options>")
+@app.route("/list_by_period/<options>")
 @login_required
 def user_todo_list_sorted_by_periods(options):
+    data = datetime.datetime.now()
     user_tasks = current_user.task
-    tasks = [task for task in user_tasks if task.category == options]
+    if options not in LIST_OF_PERIODS:
+        return redirect(url_for("logout"))
+    if options == "Today":
+        tasks = [task for task in user_tasks if task.data.day == data.day]
+    elif options == "Month":
+        tasks = [task for task in user_tasks if task.data.month == data.month]
+    elif options == "3 Month":
+        delta1 = datetime.timedelta(days=91)
+        tasks = []
+        for task in user_tasks:
+            date2 = task.data - delta1
+            if task.data < date2:
+                tasks.append(task)
+    elif options == "6 Month":
+        delta1 = datetime.timedelta(days=182)
+        tasks = []
+        for task in user_tasks:
+            date2 = task.data - delta1
+            if task.data < date2:
+                tasks.append(task)
+    elif options == "Year":
+        delta1 = datetime.timedelta(days=365)
+        tasks = []
+        for task in user_tasks:
+            date2 = task.data - delta1
+            if task.data < date2:
+                tasks.append(task)
+
+        # tasks = [task for task in user_tasks]
 
     return render_template("index.html", tasks=tasks)
 
 
-@app.route("/your-list/<options>")
+@app.route("/list_by_status/<options>")
 @login_required
 def user_todo_list_sorted_by_states(options):
     user_tasks = current_user.task
-    tasks = [task for task in user_tasks if task.category == options]
+    print(options)
+    if options not in LIST_OF_STATES:
+        return redirect(url_for("logout"))
+    if options == "Done":
+        tasks = [task for task in user_tasks if task.check is True]
+    else:
+        tasks = [task for task in user_tasks if task.check is False]
 
     return render_template("index.html", tasks=tasks)
 
@@ -121,7 +162,7 @@ def login():
             return redirect(url_for("login"))
         else:
             login_user(user)
-            return redirect(url_for("user_todo_list", options="nowe_logowanie"))
+            return redirect(url_for("user_todo_list_sorted_by_states", options="Undone"))
 
     return render_template("login.html", form=form, current_user=current_user)
 
