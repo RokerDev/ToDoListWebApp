@@ -19,6 +19,7 @@
                 </div>
         </div>
         <div class="col-lg-10 table-padding">
+            <a href="#" class="task_button">Add Task</a>
             <table class="table">
               <thead>
                 <tr>
@@ -29,6 +30,7 @@
                     <th scope="col">Category</th>
                     <th scope="col">Author Id</th>
                 </tr>
+
               </thead>
               <tbody>
               {% if tasks %}
@@ -41,11 +43,13 @@
                     <td>{{task.category}}</td>
                     <td>{{task.author_id}}</td>
                 </tr>
+
               {% endfor %}
               {% endif %}
 
               </tbody>
             </table>
+            <a href="#" class="task_button">Add Task</a>
         </div>
     </div>
 </div>
