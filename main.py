@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf import FlaskForm
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from wtforms import StringField, SubmitField, PasswordField, SelectField, DateTimeField, BooleanField
+from wtforms.fields.datetime import DateTimeLocalField
 from wtforms.validators import DataRequired, URL
 
 LIST_OF_CATEGORIES = ["Home", "Shop", "Work", "Ideas", "Places"]
@@ -66,14 +67,35 @@ class LogInForm(FlaskForm):
 
 
 class AddTaskForm(FlaskForm):
-    description = SubmitField("Task", validators=[DataRequired()])
-    data = DateTimeField("Data")
-    category = SelectField("Category")
+    descriptions = StringField("Task", validators=[DataRequired()])
+    date = DateTimeLocalField('Which date is your favorite?', default=datetime.datetime.today, format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
+    category = SelectField("Category", choices=LIST_OF_CATEGORIES, validators=[DataRequired()])
+    submit = SubmitField("Log Me In")
 
 
 @app.route("/")
 def home():
     return render_template("index.html", current_user=current_user)
+
+
+@app.route("/add_new_task", methods=["GET", "POST"])
+def add_new_task():
+    form = AddTaskForm()
+    print(form.validate_on_submit())
+
+    if form.validate_on_submit():
+        task = Tasks(
+            author_task_id=len(current_user.task)+1,
+            check=False,
+            description=form.descriptions.data,
+            data=form.date.data,
+            category=form.category.data,
+            author_id=current_user.id
+        )
+        db.session.add(task)
+        db.session.commit()
+        return redirect(url_for("user_todo_list_sorted_by_states", options="Undone"))
+    return render_template("add-task.html", current_user=current_user, form=form)
 
 
 @app.route("/list_by_category/<options>")
