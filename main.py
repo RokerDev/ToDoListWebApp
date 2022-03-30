@@ -67,9 +67,18 @@ class LogInForm(FlaskForm):
 
 
 class AddTaskForm(FlaskForm):
-    descriptions = StringField("Task", validators=[DataRequired()])
-    date = DateTimeLocalField('Which date is your favorite?', default=datetime.datetime.today, format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
-    category = SelectField("Category", choices=LIST_OF_CATEGORIES, validators=[DataRequired()])
+    descriptions = StringField("Task",
+                               validators=[DataRequired()]
+                               )
+    date = DateTimeLocalField('Task Deadline',
+                              default=datetime.datetime.today,
+                              format='%Y-%m-%dT%H:%M',
+                              validators=[DataRequired()]
+                              )
+    category = SelectField("Category",
+                           choices=LIST_OF_CATEGORIES,
+                           validators=[DataRequired()]
+                           )
     submit = SubmitField("Log Me In")
 
 
