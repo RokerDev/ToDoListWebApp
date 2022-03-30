@@ -79,7 +79,7 @@ class AddTaskForm(FlaskForm):
                            choices=LIST_OF_CATEGORIES,
                            validators=[DataRequired()]
                            )
-    submit = SubmitField("Log Me In")
+    submit = SubmitField("Add Task")
 
 
 @app.route("/")
@@ -222,7 +222,7 @@ def register():
         )
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for("home"))
+        return redirect(url_for("user_todo_list_sorted_by_states", options="Undone"))
     return render_template("register.html", form=form)
 
 
