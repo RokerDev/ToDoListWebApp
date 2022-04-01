@@ -7,7 +7,7 @@
 
     <div>
         <h1>---Add Task---</h1>
-        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "dark"}) }}
         <ul>
         {% for message in get_flashed_messages() %}
             <li>{{message}}</li>
