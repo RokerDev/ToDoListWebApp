@@ -264,6 +264,7 @@ def register():
         )
         db.session.add(user)
         db.session.commit()
+        login_user(user)
         return redirect(url_for("user_todo_list_sorted_by_states", options="Undone"))
     return render_template("register.html", form=form)
 
