@@ -35,9 +35,27 @@
               <tbody>
               {% if tasks %}
               {% for task in tasks %}
-                <tr>
+                <tr id="{{task.author_task_id}}">
                     <th scope="row">{{task.author_task_id}}</th>
-                    <td>{{task.check}}</td>
+                    {% if task.check %}
+                    <td>
+                        <form method="POST" action="{{url_for('change_status')}}">
+                            <div>{{ form.task_id(value=task.id) }}</div>
+                            <div>{{ form.url(value=url) }}</div>
+                            <div>{{ form.options(value=options) }}</div>
+                            <div>{{ form.submit(value="Undone") }}</div>
+                        </form>
+                    </td>
+                    {% else %}
+                    <td>
+                        <form method="POST" action="{{url_for('change_status')}}">
+                            <div>{{ form.task_id(value=task.id) }}</div>
+                            <div>{{ form.url(value=url) }}</div>
+                            <div>{{ form.options(value=options) }}</div>
+                            <div>{{ form.submit(value="Done") }}</div>
+                        </form>
+                    </td>
+                    {% endif %}
                     <td class="table-space">{{task.description}}</td>
                     <td>{{task.data}}</td>
                     <td>{{task.category}}</td>
