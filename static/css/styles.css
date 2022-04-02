@@ -53,7 +53,7 @@ padding: 2% 0;
 
 /* Login Page */
 
-.login-container{
+.full-center-container{
   display: flex;
   justify-content: center;
   align-items: center;
