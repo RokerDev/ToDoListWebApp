@@ -156,9 +156,15 @@ def user_todo_list_sorted_by_periods(options):
         print(options)
         return redirect(url_for("logout"))
     if options == "Today":
-        tasks = [task for task in user_tasks if task.data.day == data.day and task.check is False]
+        delta1 = datetime.timedelta(days=1)
+        tasks = []
+        for task in user_tasks:
+            date2 = datetime.datetime.now() + delta1
+            print(date2, task.data)
+            if task.data < date2 and task.check is False:
+                tasks.append(task)
     elif options == "Month":
-        delta1 = datetime.timedelta(days=91)
+        delta1 = datetime.timedelta(days=30)
         tasks = []
         for task in user_tasks:
             date2 = datetime.datetime.now() + delta1
@@ -185,8 +191,8 @@ def user_todo_list_sorted_by_periods(options):
         delta1 = datetime.timedelta(days=365)
         tasks = []
         for task in user_tasks:
-            date2 = task.data + delta1
-            print(date2, task.data)
+            date2 = datetime.datetime.now() + delta1
+            print(task.data, date2)
             if task.data < date2 and task.check is False:
                 tasks.append(task)
 
