@@ -100,9 +100,6 @@ def change_status():
         task_id = request.form['task_id'],
         url = request.form['url']
         options = request.form['options']
-        print(options)
-        print(url, options)
-        print("cos")
         task = Tasks.query.get(task_id)
         if task.check:
             task.check = False
@@ -116,7 +113,6 @@ def change_status():
 @app.route("/add_new_task", methods=["GET", "POST"])
 def add_new_task():
     form = AddTaskForm()
-    print(form.validate_on_submit())
 
     if form.validate_on_submit():
         task = Tasks(
@@ -153,14 +149,12 @@ def user_todo_list_sorted_by_periods(options):
     form = ChangeStatusForm()
     user_tasks = current_user.task
     if options not in LIST_OF_PERIODS:
-        print(options)
         return redirect(url_for("logout"))
     if options == "Today":
         delta1 = datetime.timedelta(days=1)
         tasks = []
         for task in user_tasks:
             date2 = datetime.datetime.now() + delta1
-            print(date2, task.data)
             if task.data < date2 and task.check is False:
                 tasks.append(task)
     elif options == "Month":
@@ -168,7 +162,6 @@ def user_todo_list_sorted_by_periods(options):
         tasks = []
         for task in user_tasks:
             date2 = datetime.datetime.now() + delta1
-            print(date2, task.data)
             if task.data < date2 and task.check is False:
                 tasks.append(task)
     elif options == "3 Month":
@@ -176,7 +169,6 @@ def user_todo_list_sorted_by_periods(options):
         tasks = []
         for task in user_tasks:
             date2 = datetime.datetime.now() + delta1
-            print(date2, task.data)
             if task.data < date2 and task.check is False:
                 tasks.append(task)
     elif options == "6 Month":
@@ -184,7 +176,6 @@ def user_todo_list_sorted_by_periods(options):
         tasks = []
         for task in user_tasks:
             date2 = datetime.datetime.now() + delta1
-            print(date2, task.data)
             if task.data < date2 and task.check is False:
                 tasks.append(task)
     elif options == "Year":
@@ -192,7 +183,6 @@ def user_todo_list_sorted_by_periods(options):
         tasks = []
         for task in user_tasks:
             date2 = datetime.datetime.now() + delta1
-            print(task.data, date2)
             if task.data < date2 and task.check is False:
                 tasks.append(task)
 
@@ -207,7 +197,6 @@ def user_todo_list_sorted_by_periods(options):
 def user_todo_list_sorted_by_states(options):
     user_tasks = current_user.task
     form = ChangeStatusForm()
-    print(options)
     if options not in LIST_OF_STATES:
         return redirect(url_for("logout"))
     if options == "Done":
