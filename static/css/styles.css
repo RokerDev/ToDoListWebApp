@@ -1,11 +1,42 @@
 body{
     background: #f8f9fa;
-
 }
 
 .container-fluid{
 padding: 0 5%;
 }
+
+.full-center-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 70vh;
+}
+
+
+/* Start Page */
+
+.home-page .btn{
+margin: 5% 0;
+font-size: 1.5rem;
+}
+
+.home-page h1{
+line-height: 5rem;
+font-size: 5rem;
+}
+
+.home-page h2{
+font-size: 2.5rem;
+line-height: 5rem;
+}
+
+.home-buttons{
+display: inline;
+}
+
+
 
 /* Navbar */
 .navbar{
@@ -14,11 +45,12 @@ padding-bottom: 0;
 
 .navbar-brand{
     margin: 0 2%;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    font: bold;
 }
 
- /* Nav's buttons */
 
+ /* Nav's buttons */
 
 .btn{
 font-size: 1.5rem;
@@ -33,6 +65,7 @@ text-align: center;
 padding: 2% 0;
 }
 
+
 /* Nav's tabs */
 
 .nav-tabs{
@@ -40,6 +73,7 @@ padding: 2% 0;
     height: 90vh;
     padding: 3% 7%;
 }
+
 
 /* Table */
 
@@ -51,66 +85,29 @@ padding: 2% 0;
 padding: 2% 0;
 }
 
-/* Login Page */
 
-.full-center-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 70vh;
+/* Quick Forms */
+
+.quick-form-container h1{
+font-size: 4rem;
 }
 
-.login-container .form-control{
+.quick-form-container .btn{
+margin: 6% 0;
+}
+
+.quick-form{
+padding: 15% 0;
+}
+
+.quick-form .form-control{
 margin: 0 0 2rem;
 }
 
-.login-container .control-label{
+.quick-form .control-label{
 font-size: 1.5rem;
-
 }
 
-.login-container h1{
-font-size: 4rem;
-margin-bottom: 4rem;
-
-}
-
-/* Add_Task_Button */
-.task_button {
-   background: #3D94F6;
-   background-image: -webkit-linear-gradient(top, #3D94F6, #1E62D0);
-   background-image: -moz-linear-gradient(top, #3D94F6, #1E62D0);
-   background-image: -ms-linear-gradient(top, #3D94F6, #1E62D0);
-   background-image: -o-linear-gradient(top, #3D94F6, #1E62D0);
-   background-image: -webkit-gradient(to bottom, #3D94F6, #1E62D0);
-   -webkit-border-radius: 20px;
-   -moz-border-radius: 20px;
-   border-radius: 20px;
-   color: #FFFFFF;
-   font-family: Open Sans;
-   font-size: 21px;
-   font-weight: 900;
-   padding: 11px;
-   text-decoration: none;
-   display: inline-block;
-   cursor: pointer;
-   text-align: center;
-}
-
-.task_button:hover {
-   border: solid #FFAE00 1px;
-   background: #1E62D0;
-   background-image: -webkit-linear-gradient(top, #1E62D0, #3D94F6);
-   background-image: -moz-linear-gradient(top, #1E62D0, #3D94F6);
-   background-image: -ms-linear-gradient(top, #1E62D0, #3D94F6);
-   background-image: -o-linear-gradient(top, #1E62D0, #3D94F6);
-   background-image: -webkit-gradient(to bottom, #1E62D0, #3D94F6);
-   -webkit-border-radius: 20px;
-   -moz-border-radius: 20px;
-   border-radius: 20px;
-   text-decoration: none;
-}
 
 /* Media Queries */
 @media screen and (max-width: 992px) {
