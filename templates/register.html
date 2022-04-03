@@ -2,12 +2,15 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
-<div class="full-center-container">
+<div id="register" class="full-center-container">
 
 
-    <div>
+    <div class="quick-form-container">
       <h1>---Register---</h1>
-      {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        <div class="quick-form">
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "dark"}) }}
+        </div>
+
     </div>
 
 

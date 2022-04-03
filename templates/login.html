@@ -5,9 +5,11 @@
 <div class="full-center-container">
 
 
-    <div>
+    <div class="quick-form-container">
         <h1>----Log In----</h1>
-        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        <div class="quick-form">
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "dark"}) }}
+        </div>
         <ul>
         {% for message in get_flashed_messages() %}
             <li>{{message}}</li>
