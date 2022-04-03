@@ -142,6 +142,16 @@ def user_todo_list_sorted_by_category(options):
                            url="user_todo_list_sorted_by_category", options=options)
 
 
+def get_tasks_with_days(cur_user_tasks, days_to_end):
+    delta1 = datetime.timedelta(days=days_to_end)
+    tasks = []
+    for task in cur_user_tasks:
+        date2 = datetime.datetime.now() + delta1
+        if task.data < date2 and task.check is False:
+            tasks.append(task)
+    return tasks
+
+
 @app.route("/list_by_period/<options>")
 @login_required
 def user_todo_list_sorted_by_periods(options):
@@ -151,42 +161,15 @@ def user_todo_list_sorted_by_periods(options):
     if options not in LIST_OF_PERIODS:
         return redirect(url_for("logout"))
     if options == "Today":
-        delta1 = datetime.timedelta(days=1)
-        tasks = []
-        for task in user_tasks:
-            date2 = datetime.datetime.now() + delta1
-            if task.data < date2 and task.check is False:
-                tasks.append(task)
+        tasks = get_tasks_with_days(user_tasks, 1)
     elif options == "Month":
-        delta1 = datetime.timedelta(days=30)
-        tasks = []
-        for task in user_tasks:
-            date2 = datetime.datetime.now() + delta1
-            if task.data < date2 and task.check is False:
-                tasks.append(task)
+        tasks = get_tasks_with_days(user_tasks, 30)
     elif options == "3 Month":
-        delta1 = datetime.timedelta(days=91)
-        tasks = []
-        for task in user_tasks:
-            date2 = datetime.datetime.now() + delta1
-            if task.data < date2 and task.check is False:
-                tasks.append(task)
+        tasks = get_tasks_with_days(user_tasks, 91)
     elif options == "6 Month":
-        delta1 = datetime.timedelta(days=182)
-        tasks = []
-        for task in user_tasks:
-            date2 = datetime.datetime.now() + delta1
-            if task.data < date2 and task.check is False:
-                tasks.append(task)
+        tasks = get_tasks_with_days(user_tasks, 182)
     elif options == "Year":
-        delta1 = datetime.timedelta(days=365)
-        tasks = []
-        for task in user_tasks:
-            date2 = datetime.datetime.now() + delta1
-            if task.data < date2 and task.check is False:
-                tasks.append(task)
-
-        # tasks = [task for task in user_tasks]
+        tasks = get_tasks_with_days(user_tasks, 365)
 
     return render_template("index.html", tasks=tasks, form=form,
                            url="user_todo_list_sorted_by_periods", options=options)
